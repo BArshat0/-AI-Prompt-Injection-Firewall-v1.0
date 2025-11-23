@@ -179,7 +179,7 @@ class ConfirmationModal {
 // Dashboard JavaScript - REAL DATA ONLY VERSION
 class AIPIFDashboard {
     constructor() {
-        this.apiBase=""
+        this.apiBase='';
         this.csrfToken = null;
         this.logsOffset = 0;
         this.logsLimit = 20;
@@ -2156,4 +2156,5 @@ if (typeof module !== 'undefined' && module.exports) {
     module.exports = { AIPIFThemeManager, AIPIFDashboard };
 
 }
+
 

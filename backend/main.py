@@ -4,7 +4,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, JSONResponse
 from pydantic import BaseModel, validator
 from typing import Optional, Dict, Any
-from .auth import UserSignup, UserLogin, Token, UserResponse, create_access_token, get_auth_system, DatabaseAuth
+from auth import UserSignup, UserLogin, Token, UserResponse, create_access_token, get_auth_system, DatabaseAuth
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 import uvicorn
 import os
@@ -13,11 +13,11 @@ import urllib.parse
 import logging
 from contextlib import asynccontextmanager
 import re
-from .scanner import HybridPromptScanner as PromptScanner
-from .sandbox import SandboxLLM
-from .logger import get_logger, DatabaseLogger
-from .database import get_db, engine
-from .models import Base
+from scanner import HybridPromptScanner as PromptScanner
+from sandbox import SandboxLLM
+from logger import get_logger, DatabaseLogger
+from database import get_db, engine
+from models import Base
 from sqlalchemy.orm import Session
 import secrets
 from fastapi import Cookie, Form
@@ -1028,3 +1028,4 @@ if __name__ == "__main__":
         workers=1 if settings.debug else min(4, os.cpu_count() or 1)
 
     )
+

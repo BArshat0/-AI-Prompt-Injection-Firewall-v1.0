@@ -179,7 +179,7 @@ class ConfirmationModal {
 // Dashboard JavaScript - REAL DATA ONLY VERSION
 class AIPIFDashboard {
     constructor() {
-        this.apiBase='';
+        this.apiBase = '';
         this.csrfToken = null;
         this.logsOffset = 0;
         this.logsLimit = 20;
@@ -1057,14 +1057,27 @@ class AIPIFDashboard {
         if (logs && logs.length > 0) {
             logs.forEach(log => {
                 if (!log.timestamp) return;
-                const logDate = new Date(log.timestamp).toISOString().split('T')[0];
-                const dayData = dailyData.find(day => day.date === logDate);
-
-                if (dayData) {
-                    dayData.total++;
-                    if (log.action === 'blocked' || (log.risk_score && log.risk_score >= 70)) {
-                        dayData.blocked++;
+                
+                try {
+                    // PostgreSQL-compatible date parsing
+                    const timestamp = new Date(log.timestamp);
+                    if (isNaN(timestamp.getTime())) {
+                        console.warn('⚠️ Invalid timestamp found:', log.timestamp);
+                        return; // Skip invalid dates
                     }
+                    
+                    const logDate = timestamp.toISOString().split('T')[0];
+                    const dayData = dailyData.find(day => day.date === logDate);
+
+                    if (dayData) {
+                        dayData.total++;
+                        if (log.action === 'blocked' || (log.risk_score && log.risk_score >= 70)) {
+                            dayData.blocked++;
+                        }
+                    }
+                } catch (error) {
+                    console.warn('⚠️ Error processing log timestamp:', log.timestamp, error);
+                    // Continue with next log instead of breaking
                 }
             });
         }
@@ -1739,7 +1752,11 @@ class AIPIFDashboard {
     formatTime(timestamp) {
         if (!timestamp) return 'N/A';
         try {
-            return new Date(timestamp).toLocaleString();
+            const date = new Date(timestamp);
+            if (isNaN(date.getTime())) {
+                return 'Invalid Date';
+            }
+            return date.toLocaleString();
         } catch {
             return 'Invalid Date';
         }
@@ -2154,7 +2171,4 @@ function clearLogs() {
 // Export for potential module usage
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = { AIPIFThemeManager, AIPIFDashboard };
-
 }
-
-

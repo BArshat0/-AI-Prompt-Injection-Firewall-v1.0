@@ -1059,27 +1059,22 @@ class AIPIFDashboard {
             if (!log.timestamp) return;
             
             try {
-                // PostgreSQL-compatible date parsing with BETTER validation
+                // FIXED: Handle PostgreSQL timestamp format with double timezone
                 let timestamp;
+                let timestampStr = String(log.timestamp);
                 
-                // Handle different timestamp formats from PostgreSQL
-                if (typeof log.timestamp === 'string') {
-                    // PostgreSQL returns ISO strings like "2024-01-15T10:30:00.123Z"
-                    timestamp = new Date(log.timestamp);
-                } else if (typeof log.timestamp === 'number') {
-                    // Handle Unix timestamps
-                    timestamp = new Date(log.timestamp);
-                } else if (log.timestamp instanceof Date) {
-                    // Already a Date object
-                    timestamp = log.timestamp;
-                } else {
-                    console.warn('⚠️ Unknown timestamp format:', typeof log.timestamp, log.timestamp);
-                    return;
+                // Fix PostgreSQL double timezone format: "2025-11-23T10:20:10.927787+00:00Z"
+                if (timestampStr.includes('+00:00Z')) {
+                    // Remove the invalid double timezone and keep only Z
+                    timestampStr = timestampStr.replace('+00:00Z', 'Z');
+                    console.log('🔧 Fixed timestamp format:', timestampStr);
                 }
-
-                // Validate the date BEFORE using toISOString()
+                
+                timestamp = new Date(timestampStr);
+                
+                // Validate the date
                 if (isNaN(timestamp.getTime())) {
-                    console.warn('⚠️ Invalid timestamp found:', log.timestamp, 'Type:', typeof log.timestamp);
+                    console.warn('⚠️ Invalid timestamp after fix:', timestampStr);
                     return;
                 }
 
@@ -1768,18 +1763,25 @@ class AIPIFDashboard {
     }
 
     formatTime(timestamp) {
-        if (!timestamp) return 'N/A';
-        try {
-            const date = new Date(timestamp);
-            if (isNaN(date.getTime())) {
-                return 'Invalid Date';
-            }
-            return date.toLocaleString();
-        } catch {
+    if (!timestamp) return 'N/A';
+    try {
+        let timestampStr = String(timestamp);
+        
+        // Fix PostgreSQL double timezone format
+        if (timestampStr.includes('+00:00Z')) {
+            timestampStr = timestampStr.replace('+00:00Z', 'Z');
+        }
+        
+        const date = new Date(timestampStr);
+        if (isNaN(date.getTime())) {
             return 'Invalid Date';
         }
+        return date.toLocaleString();
+    } catch {
+        return 'Invalid Date';
     }
-
+}
+    
     capitalizeFirst(string) {
         if (!string) return '';
         return string.charAt(0).toUpperCase() + string.slice(1);
@@ -2190,4 +2192,5 @@ function clearLogs() {
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = { AIPIFThemeManager, AIPIFDashboard };
 }
+
 

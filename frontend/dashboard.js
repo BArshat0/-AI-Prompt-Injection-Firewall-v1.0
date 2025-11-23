@@ -1046,48 +1046,66 @@ class AIPIFDashboard {
     }
 
     processTimeSeriesData(logs) {
-        const last7Days = this.getLast7Days();
-        const dailyData = last7Days.map(day => ({
-            date: day.date,
-            label: day.label,
-            total: 0,
-            blocked: 0
-        }));
+    const last7Days = this.getLast7Days();
+    const dailyData = last7Days.map(day => ({
+        date: day.date,
+        label: day.label,
+        total: 0,
+        blocked: 0
+    }));
 
-        if (logs && logs.length > 0) {
-            logs.forEach(log => {
-                if (!log.timestamp) return;
+    if (logs && logs.length > 0) {
+        logs.forEach(log => {
+            if (!log.timestamp) return;
+            
+            try {
+                // PostgreSQL-compatible date parsing with BETTER validation
+                let timestamp;
                 
-                try {
-                    // PostgreSQL-compatible date parsing
-                    const timestamp = new Date(log.timestamp);
-                    if (isNaN(timestamp.getTime())) {
-                        console.warn('⚠️ Invalid timestamp found:', log.timestamp);
-                        return; // Skip invalid dates
-                    }
-                    
-                    const logDate = timestamp.toISOString().split('T')[0];
-                    const dayData = dailyData.find(day => day.date === logDate);
-
-                    if (dayData) {
-                        dayData.total++;
-                        if (log.action === 'blocked' || (log.risk_score && log.risk_score >= 70)) {
-                            dayData.blocked++;
-                        }
-                    }
-                } catch (error) {
-                    console.warn('⚠️ Error processing log timestamp:', log.timestamp, error);
-                    // Continue with next log instead of breaking
+                // Handle different timestamp formats from PostgreSQL
+                if (typeof log.timestamp === 'string') {
+                    // PostgreSQL returns ISO strings like "2024-01-15T10:30:00.123Z"
+                    timestamp = new Date(log.timestamp);
+                } else if (typeof log.timestamp === 'number') {
+                    // Handle Unix timestamps
+                    timestamp = new Date(log.timestamp);
+                } else if (log.timestamp instanceof Date) {
+                    // Already a Date object
+                    timestamp = log.timestamp;
+                } else {
+                    console.warn('⚠️ Unknown timestamp format:', typeof log.timestamp, log.timestamp);
+                    return;
                 }
-            });
-        }
 
-        return {
-            labels: dailyData.map(day => day.label),
-            totalRequests: dailyData.map(day => day.total),
-            blockedRequests: dailyData.map(day => day.blocked)
-        };
+                // Validate the date BEFORE using toISOString()
+                if (isNaN(timestamp.getTime())) {
+                    console.warn('⚠️ Invalid timestamp found:', log.timestamp, 'Type:', typeof log.timestamp);
+                    return;
+                }
+
+                // Now safely convert to ISO string
+                const logDate = timestamp.toISOString().split('T')[0];
+                const dayData = dailyData.find(day => day.date === logDate);
+
+                if (dayData) {
+                    dayData.total++;
+                    if (log.action === 'blocked' || (log.risk_score && log.risk_score >= 70)) {
+                        dayData.blocked++;
+                    }
+                }
+            } catch (error) {
+                console.warn('⚠️ Error processing log timestamp:', log.timestamp, 'Error:', error);
+                // Continue with next log instead of breaking
+            }
+        });
     }
+
+    return {
+        labels: dailyData.map(day => day.label),
+        totalRequests: dailyData.map(day => day.total),
+        blockedRequests: dailyData.map(day => day.blocked)
+    };
+}
 
     getLast7Days() {
         const days = [];
@@ -2172,3 +2190,4 @@ function clearLogs() {
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = { AIPIFThemeManager, AIPIFDashboard };
 }
+

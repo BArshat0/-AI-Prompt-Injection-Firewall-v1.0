@@ -1,0 +1,2166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - AIPIF</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+    :root {
+        --primary: #6366f1;
+        --primary-dark: #4f46e5;
+        --primary-light: #8b5cf6;
+        --secondary: #06b6d4;
+        --accent: #f59e0b;
+        --text-primary: #1e293b;
+        --text-secondary: #64748b;
+        --text-light: #94a3b8;
+        --bg-primary: #ffffff;
+        --bg-secondary: #f8fafc;
+        --bg-glass: rgba(255, 255, 255, 0.85);
+        --border-light: #e2e8f0;
+        --border-medium: #cbd5e1;
+        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        --radius-sm: 0.375rem;
+        --radius-md: 0.5rem;
+        --radius-lg: 0.75rem;
+        --radius-xl: 1rem;
+        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    [data-theme="dark"] {
+        --primary: #818cf8;
+        --primary-dark: #6366f1;
+        --primary-light: #a78bfa;
+        --secondary: #22d3ee;
+        --accent: #fbbf24;
+        --text-primary: #f1f5f9;
+        --text-secondary: #cbd5e1;
+        --text-light: #94a3b8;
+        --bg-primary: #0f172a;
+        --bg-secondary: #1e293b;
+        --bg-glass: rgba(15, 23, 42, 0.85);
+        --border-light: #334155;
+        --border-medium: #475569;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        color: var(--text-primary);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        transition: var(--transition);
+        overflow-x: hidden;
+    }
+
+    [data-theme="light"] body {
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    }
+
+    /* Enhanced Animated Background */
+    .animated-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        overflow: hidden;
+    }
+
+    .floating-shape {
+        position: absolute;
+        border-radius: 50%;
+        background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(6, 182, 212, 0.3));
+        filter: blur(10px);
+        animation: float 20s infinite ease-in-out;
+        opacity: 0.8;
+    }
+
+    .shape-1 {
+        width: 400px;
+        height: 400px;
+        top: 10%;
+        left: 5%;
+        animation-delay: 0s;
+        background: linear-gradient(135deg, rgba(139, 92, 246, 0.4), rgba(6, 182, 212, 0.4));
+    }
+
+    .shape-2 {
+        width: 300px;
+        height: 300px;
+        top: 60%;
+        left: 80%;
+        animation-delay: 5s;
+        background: linear-gradient(135deg, rgba(6, 182, 212, 0.4), rgba(139, 92, 246, 0.4));
+    }
+
+    .shape-3 {
+        width: 350px;
+        height: 350px;
+        top: 20%;
+        left: 70%;
+        animation-delay: 10s;
+        background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(245, 158, 11, 0.3));
+    }
+
+    .shape-4 {
+        width: 250px;
+        height: 250px;
+        top: 70%;
+        left: 10%;
+        animation-delay: 15s;
+        background: linear-gradient(135deg, rgba(245, 158, 11, 0.3), rgba(6, 182, 212, 0.3));
+    }
+
+    .shape-5 {
+        width: 200px;
+        height: 200px;
+        top: 30%;
+        left: 20%;
+        animation-delay: 7s;
+        background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(245, 158, 11, 0.2));
+    }
+
+    .shape-6 {
+        width: 180px;
+        height: 180px;
+        top: 50%;
+        left: 60%;
+        animation-delay: 12s;
+        background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(139, 92, 246, 0.2));
+    }
+
+    @keyframes float {
+        0%, 100% {
+            transform: translateY(0) translateX(0) rotate(0deg) scale(1);
+        }
+        25% {
+            transform: translateY(-30px) translateX(15px) rotate(5deg) scale(1.05);
+        }
+        50% {
+            transform: translateY(20px) translateX(-20px) rotate(-5deg) scale(0.95);
+        }
+        75% {
+            transform: translateY(-15px) translateX(-15px) rotate(3deg) scale(1.02);
+        }
+    }
+
+    /* Enhanced Navigation - FIXED */
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.25rem 2rem;
+        position: relative;
+        z-index: 100;
+        background: var(--bg-glass);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--border-light);
+    }
+
+    .nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        text-decoration: none;
+        transition: var(--transition);
+    }
+
+    .nav-brand:hover {
+        transform: translateY(-2px);
+    }
+
+    .logo {
+        width: 42px;
+        height: 42px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        border-radius: var(--radius-lg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.25rem;
+        box-shadow: var(--shadow-md);
+        transition: var(--transition);
+    }
+
+    .nav-brand:hover .logo {
+        transform: scale(1.05) rotate(5deg);
+        box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+    }
+
+    .brand-text {
+        font-size: 1.5rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        transition: var(--transition);
+    }
+
+    .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    .nav-link {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.95rem;
+        transition: var(--transition);
+        position: relative;
+        padding: 0.5rem 0;
+    }
+
+    .nav-link:hover {
+        color: var(--text-primary);
+        transform: translateY(-2px);
+    }
+
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        transition: width 0.3s ease;
+    }
+
+    .nav-link:hover::after {
+        width: 100%;
+    }
+
+    .theme-toggle {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-light);
+        border-radius: var(--radius-lg);
+        padding: 0.5rem 1rem;
+        color: var(--text-primary);
+        cursor: pointer;
+        transition: var(--transition);
+        font-weight: 500;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .theme-toggle::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s ease;
+    }
+
+    .theme-toggle:hover {
+        background: var(--primary);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+    }
+
+    .theme-toggle:hover::before {
+        left: 100%;
+    }
+
+    /* FIXED: Mobile Menu Toggle Button */
+    .mobile-menu-toggle {
+        display: none;
+        position: absolute;
+        left: 1.5rem;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 1001;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        border: none;
+        border-radius: var(--radius-lg);
+        width: 44px;
+        height: 44px;
+        cursor: pointer;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        box-shadow: var(--shadow-md);
+        align-items: center;
+        justify-content: center;
+    }
+
+    .mobile-menu-toggle:hover {
+        transform: translateY(-50%) scale(1.05);
+        box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+    }
+
+    /* Mobile Overlay */
+    .mobile-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 998;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    /* Mobile Navigation */
+    .mobile-nav-links {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 300px;
+        height: 100vh;
+        background: var(--bg-glass);
+        backdrop-filter: blur(30px);
+        flex-direction: column;
+        padding: 6rem 2rem 2rem;
+        transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1000;
+        display: flex;
+        box-shadow: 8px 0 40px rgba(0, 0, 0, 0.5);
+        border-right: 1px solid var(--border-light);
+        overflow-y: auto;
+    }
+
+    .mobile-nav-links.mobile-open {
+        left: 0;
+    }
+
+    /* Mobile Menu Links */
+    .mobile-nav-links .nav-link {
+        padding: 1.25rem 1.5rem;
+        margin: 0.5rem 0;
+        border-radius: var(--radius-lg);
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-light);
+        width: 100%;
+        text-align: left;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        color: var(--text-primary);
+        font-weight: 600;
+        font-size: 1rem;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: var(--shadow-sm);
+    }
+
+    .mobile-nav-links .nav-link::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.6s ease;
+    }
+
+    .mobile-nav-links .nav-link:hover {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        transform: translateX(12px) scale(1.02);
+        box-shadow: var(--shadow-lg);
+        border-color: transparent;
+    }
+
+    .mobile-nav-links .nav-link:hover::before {
+        left: 100%;
+    }
+
+    .mobile-nav-links .nav-link i {
+        width: 20px;
+        text-align: center;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+    }
+
+    .mobile-nav-links .nav-link:hover i {
+        transform: scale(1.2) rotate(5deg);
+        color: white;
+    }
+
+    /* Mobile Theme Toggle */
+    .mobile-nav-links .theme-toggle {
+        margin-top: 1.5rem;
+        width: 100%;
+        justify-content: flex-start;
+        padding: 1.25rem 1.5rem;
+        border-radius: var(--radius-lg);
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-light);
+        color: var(--text-primary);
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: var(--shadow-sm);
+    }
+
+    .mobile-nav-links .theme-toggle::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.6s ease;
+    }
+
+    .mobile-nav-links .theme-toggle:hover {
+        background: linear-gradient(135deg, var(--accent), var(--primary-light));
+        color: white;
+        transform: translateX(12px) scale(1.02);
+        box-shadow: var(--shadow-lg);
+        border-color: transparent;
+    }
+
+    .mobile-nav-links .theme-toggle:hover::before {
+        left: 100%;
+    }
+
+    .mobile-nav-links .theme-toggle i {
+        width: 20px;
+        text-align: center;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+    }
+
+    .mobile-nav-links .theme-toggle:hover i {
+        transform: scale(1.2) rotate(15deg);
+        color: white;
+    }
+
+    /* Mobile Menu Header */
+    .mobile-nav-links::before {
+        content: 'Navigation';
+        position: absolute;
+        top: 2rem;
+        left: 2rem;
+        font-size: 1.5rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 2rem;
+    }
+
+    /* Enhanced Container & Card Styles - FIXED */
+    .auth-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: 1;
+        padding: 2rem;
+    }
+
+    .glass-card {
+        background: var(--bg-glass);
+        backdrop-filter: blur(25px);
+        border: 1px solid var(--border-light);
+        border-radius: var(--radius-xl);
+        padding: 3rem;
+        width: 100%;
+        max-width: 440px;
+        box-shadow: var(--shadow-xl);
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .glass-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+        transition: left 0.6s ease;
+    }
+
+    .glass-card:hover::before {
+        left: 100%;
+    }
+
+    .glass-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Header Styles */
+    .auth-header {
+        text-align: center;
+        margin-bottom: 2.5rem;
+    }
+
+    .auth-badge {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        border-radius: var(--radius-xl);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        color: white;
+        font-size: 2rem;
+        box-shadow: var(--shadow-lg);
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .auth-badge::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+        transition: left 0.5s ease;
+    }
+
+    .glass-card:hover .auth-badge {
+        transform: scale(1.05);
+    }
+
+    .glass-card:hover .auth-badge::before {
+        left: 100%;
+    }
+
+    .glass-title {
+        font-size: 2rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        transition: var(--transition);
+    }
+
+    .glass-card:hover .glass-title {
+        background: linear-gradient(135deg, var(--primary-light), var(--secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .auth-header p {
+        color: var(--text-secondary);
+        font-size: 1rem;
+        font-weight: 500;
+        transition: var(--transition);
+    }
+
+    /* FIXED: Enhanced Form Fields */
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: var(--text-primary);
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: var(--transition);
+    }
+
+    .input-group {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    .glass-input {
+        width: 100%;
+        padding: 1rem 3rem 1rem 3rem;
+        background: var(--bg-secondary);
+        border: 2px solid var(--border-light);
+        border-radius: var(--radius-lg);
+        color: var(--text-primary);
+        font-size: 1rem;
+        font-weight: 500;
+        transition: var(--transition);
+        font-family: inherit;
+    }
+
+    .glass-input:focus {
+        outline: none;
+        border-color: var(--primary);
+        background: var(--bg-primary);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+        transform: translateY(-2px);
+    }
+
+    .glass-input::placeholder {
+        color: var(--text-light);
+        font-weight: 400;
+    }
+
+    .input-group i:first-child {
+        position: absolute;
+        left: 1rem;
+        color: var(--text-light);
+        transition: var(--transition);
+        z-index: 2;
+        pointer-events: none;
+    }
+
+    .glass-input:focus + i {
+        color: var(--primary);
+        transform: scale(1.1);
+    }
+
+    .password-toggle {
+        position: absolute;
+        right: 1rem;
+        background: none;
+        border: none;
+        color: var(--text-light);
+        cursor: pointer;
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+
+    }
+
+    .password-toggle:hover {
+        color: var(--primary);
+        background: rgba(99, 102, 241, 0.1);
+        transform: scale(1.1);
+    }
+
+    /* Form Options & Checkboxes - FIXED */
+    .form-options {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 1.5rem;
+        gap: 1rem;
+    }
+
+    .checkbox {
+        display: flex;
+        align-items: flex-start;
+        cursor: pointer;
+        transition: var(--transition);
+        flex: 1;
+    }
+
+    .checkbox:hover {
+        transform: translateY(-2px);
+    }
+
+    .checkbox input {
+        display: none;
+    }
+
+    .checkmark {
+        width: 18px;
+        height: 18px;
+        border: 2px solid var(--border-medium);
+        border-radius: var(--radius-sm);
+        margin-right: 0.75rem;
+        position: relative;
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        margin-top: 0.1rem;
+    }
+
+    .checkbox input:checked + .checkmark {
+        background: var(--primary);
+        border-color: var(--primary);
+        transform: scale(1.1);
+    }
+
+    .checkbox input:checked + .checkmark::after {
+        content: '';
+        width: 4px;
+        height: 8px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+        position: absolute;
+        top: 2px;
+    }
+
+    .checkbox span:not(.checkmark) {
+        color: var(--text-secondary);
+        font-weight: 500;
+        font-size: 0.95rem;
+        transition: var(--transition);
+        line-height: 1.4;
+        flex: 1;
+    }
+
+    .checkbox:hover span:not(.checkmark) {
+        color: var(--text-primary);
+    }
+
+    .link {
+        color: var(--primary);
+        text-decoration: none;
+        transition: var(--transition);
+        position: relative;
+        font-weight: 500;
+    }
+
+    .link::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: var(--primary);
+        transition: width 0.3s ease;
+    }
+
+    .link:hover {
+        color: var(--primary-dark);
+    }
+
+    .link:hover::after {
+        width: 100%;
+    }
+
+    /* Enhanced Buttons - FIXED */
+    .glass-button {
+        width: 100%;
+        padding: 1rem 2rem;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        border: none;
+        border-radius: var(--radius-lg);
+        color: white;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        box-shadow: var(--shadow-md);
+        margin-bottom: 1.5rem;
+        position: relative;
+        overflow: hidden;
+        font-family: inherit;
+    }
+
+    .glass-button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        transition: left 0.5s ease;
+    }
+
+    .glass-button:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .glass-button:hover::before {
+        left: 100%;
+    }
+
+    .glass-button:active {
+        transform: translateY(-1px);
+    }
+
+    /* Secondary Buttons */
+    .glass-button-secondary {
+        width: 100%;
+        padding: 1rem 2rem;
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-light);
+        border-radius: var(--radius-lg);
+        color: var(--text-primary);
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
+        font-family: inherit;
+    }
+
+    .glass-button-secondary::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.1), transparent);
+        transition: left 0.5s ease;
+    }
+
+    .glass-button-secondary:hover {
+        background: var(--bg-primary);
+        border-color: var(--primary);
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-md);
+    }
+
+    .glass-button-secondary:hover::before {
+        left: 100%;
+    }
+
+    /* Dividers */
+    .glass-divider {
+        display: flex;
+        align-items: center;
+        margin: 2rem 0;
+        color: var(--text-light);
+    }
+
+    .glass-divider::before, .glass-divider::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: var(--border-light);
+        transition: var(--transition);
+    }
+
+    .glass-card:hover .glass-divider::before,
+    .glass-card:hover .glass-divider::after {
+        background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    }
+
+    .glass-divider span {
+        padding: 0 1rem;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: var(--transition);
+    }
+
+    .glass-card:hover .glass-divider span {
+        color: var(--primary);
+    }
+
+    /* Form Footer */
+    .form-footer {
+        text-align: center;
+        margin-top: 2rem;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        transition: var(--transition);
+    }
+
+    .form-footer a {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 500;
+        position: relative;
+    }
+
+    .form-footer a::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: var(--primary);
+        transition: width 0.3s ease;
+    }
+
+    .form-footer a:hover {
+        color: var(--primary-dark);
+    }
+
+    .form-footer a:hover::after {
+        width: 100%;
+    }
+
+    /* Auth Message Styles */
+    .auth-message {
+        margin-top: 1rem;
+        padding: 1rem;
+        border-radius: var(--radius-lg);
+        text-align: center;
+        font-weight: 500;
+        display: none;
+        transition: var(--transition);
+        animation: slideIn 0.3s ease-out;
+    }
+
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .auth-message.success {
+        background: rgba(34, 197, 94, 0.1);
+        color: rgb(34, 197, 94);
+        border: 1px solid rgba(34, 197, 94, 0.2);
+    }
+
+    .auth-message.error {
+        background: rgba(239, 68, 68, 0.1);
+        color: rgb(239, 68, 68);
+        border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+
+    .auth-message.info {
+        background: rgba(59, 130, 246, 0.1);
+        color: rgb(59, 130, 246);
+        border: 1px solid rgba(59, 130, 246, 0.2);
+    }
+
+    /* Password Strength Indicator - FIXED */
+    .password-strength-container {
+        margin-top: 0.5rem;
+    }
+
+    .password-strength {
+        height: 4px;
+        background: var(--border-light);
+        border-radius: 2px;
+        margin: 0.5rem 0;
+        overflow: hidden;
+    }
+
+    .strength-bar {
+        height: 100%;
+        width: 0%;
+        transition: all 0.3s ease;
+        border-radius: 2px;
+    }
+
+    .strength-weak {
+        background: #ef4444;
+    }
+
+    .strength-medium {
+        background: #f59e0b;
+    }
+
+    .strength-good {
+        background: #10b981;
+    }
+
+    .strength-strong {
+        background: #059669;
+    }
+
+    .strength-text {
+        font-size: 0.8rem;
+        color: var(--text-light);
+        margin-top: 0.25rem;
+        font-weight: 500;
+    }
+
+    .input-help {
+        display: block;
+        font-size: 0.8rem;
+        color: var(--text-light);
+        margin-top: 0.25rem;
+        font-weight: 400;
+    }
+
+    /* Form Validation States - FIXED */
+    .glass-input.valid {
+        border-color: #10b981;
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+    }
+
+    .glass-input.invalid {
+        border-color: #ef4444;
+        box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+    }
+
+    .checkbox.valid .checkmark {
+        background: var(--primary);
+        border-color: var(--primary);
+    }
+
+    .checkbox.invalid .checkmark {
+        border-color: #ef4444;
+    }
+
+    /* Loading State */
+    button.loading {
+        opacity: 0.7;
+        cursor: not-allowed;
+        transform: none !important;
+    }
+
+    .fa-spin {
+        animation: fa-spin 1s infinite linear;
+    }
+
+    @keyframes fa-spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    /* Shake Animation */
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        75% { transform: translateX(5px); }
+    }
+
+    /* Responsive Design - FIXED */
+    @media (max-width: 768px) {
+        .navbar {
+            padding: 1rem 1.5rem;
+            padding-left: 4rem;
+        }
+
+        .nav-links {
+            display: none;
+        }
+
+        .mobile-menu-toggle {
+            display: flex;
+        }
+
+        .auth-container {
+            padding: 1rem;
+        }
+
+        .glass-card {
+            padding: 2rem 1.5rem;
+        }
+
+        .auth-badge {
+            width: 70px;
+            height: 70px;
+            font-size: 1.75rem;
+        }
+
+        .glass-title {
+            font-size: 1.75rem;
+        }
+
+        .form-options {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        /* Enhanced mobile background */
+        .floating-shape {
+            filter: blur(20px);
+        }
+
+        .shape-1, .shape-2, .shape-3, .shape-4, .shape-5, .shape-6 {
+            width: 200px;
+            height: 200px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .glass-card {
+            padding: 1.5rem 1.25rem;
+        }
+
+        .auth-badge {
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+        }
+
+        .glass-title {
+            font-size: 1.5rem;
+        }
+
+        .mobile-nav-links .nav-link,
+        .mobile-nav-links .theme-toggle {
+            padding: 1.1rem 1.25rem;
+            font-size: 0.95rem;
+        }
+
+        .mobile-nav-links::before {
+            font-size: 1.25rem;
+            left: 1.5rem;
+            top: 1.5rem;
+        }
+
+        .mobile-nav-links {
+            padding-top: 5rem !important;
+        }
+
+        .glass-input {
+            padding: 0.875rem 2.5rem 0.875rem 2.5rem;
+            font-size: 0.95rem;
+        }
+
+        .input-group i:first-child {
+            left: 0.875rem;
+        }
+
+
+    }
+   .professional-alert {
+        position: relative;
+        padding: 0;
+        margin: 0 0 20px 0;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        animation: alertSlideIn 0.3s ease-out;
+        border-left: 4px solid;
+    }
+
+    .professional-alert.error {
+        background: linear-gradient(135deg, #ffe6e6 0%, #ffcccc 100%);
+        border-left-color: #e74c3c;
+        color: #c0392b;
+    }
+
+    .professional-alert.warning {
+        background: linear-gradient(135deg, #fff3e6 0%, #ffe0b3 100%);
+        border-left-color: #f39c12;
+        color: #d35400;
+    }
+
+    .professional-alert.success {
+        background: linear-gradient(135deg, #e6f7e6 0%, #ccffcc 100%);
+        border-left-color: #27ae60;
+        color: #229954;
+    }
+
+    .professional-alert.info {
+        background: linear-gradient(135deg, #e6f3ff 0%, #cce7ff 100%);
+        border-left-color: #3498db;
+        color: #2980b9;
+    }
+
+    .alert-content {
+        display: flex;
+        align-items: center;
+        padding: 16px 20px;
+        gap: 12px;
+    }
+
+    .professional-alert i:first-child {
+        font-size: 1.2em;
+        flex-shrink: 0;
+    }
+
+    .alert-message {
+        flex: 1;
+        font-weight: 500;
+        line-height: 1.5;
+    }
+
+    .alert-close {
+        background: none;
+        border: none;
+        color: inherit;
+        cursor: pointer;
+        padding: 4px;
+        border-radius: 4px;
+        transition: background-color 0.2s;
+        flex-shrink: 0;
+    }
+
+    .alert-close:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    /* Field Validation Styles */
+    .field-hint {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 6px;
+        padding: 8px 12px;
+        background-color: #fff3cd;
+        border: 1px solid #ffeaa7;
+        border-radius: 6px;
+        font-size: 0.85em;
+        color: #856404;
+        animation: hintFadeIn 0.3s ease-out;
+    }
+
+    .field-hint i {
+        color: #f39c12;
+    }
+
+    .field-error {
+        border-color: #e74c3c !important;
+        box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.1) !important;
+        background-color: #fff5f5 !important;
+    }
+
+    .field-warning {
+        border-color: #f39c12 !important;
+        box-shadow: 0 0 0 2px rgba(243, 156, 18, 0.1) !important;
+        background-color: #fffaf0 !important;
+    }
+
+    .field-success {
+        border-color: #27ae60 !important;
+        box-shadow: 0 0 0 2px rgba(39, 174, 96, 0.1) !important;
+        background-color: #f0fff4 !important;
+    }
+
+    /* Terms Checkbox Styling */
+    .checkbox.field-error {
+        padding: 12px;
+        border-radius: 8px;
+        background-color: #fff5f5;
+        border: 1px solid #e74c3c;
+    }
+
+    .checkbox.field-warning {
+        padding: 12px;
+        border-radius: 8px;
+        background-color: #fffaf0;
+        border: 1px solid #f39c12;
+    }
+
+    /* Subtler Animations */
+    @keyframes alertSlideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes hintFadeIn {
+        from {
+            opacity: 0;
+            transform: translateX(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    /* Much gentler shake animation */
+    @keyframes professional-shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-3px); }
+        75% { transform: translateX(3px); }
+    }
+
+    @keyframes terms-pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.01); }
+    }
+
+    /* Loading Button Styles */
+    .loading {
+        position: relative;
+        pointer-events: none;
+    }
+
+    .loading::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: inherit;
+    }
+
+    /* Dark Theme Support */
+    [data-theme="dark"] .professional-alert.error {
+        background: linear-gradient(135deg, #4a1c1c 0%, #5c2a2a 100%);
+        color: #ff6b6b;
+    }
+
+    [data-theme="dark"] .professional-alert.warning {
+        background: linear-gradient(135deg, #4a3c1c 0%, #5c4a2a 100%);
+        color: #ffd93d;
+    }
+
+    [data-theme="dark"] .professional-alert.success {
+        background: linear-gradient(135deg, #1c4a1c 0%, #2a5c2a 100%);
+        color: #6bcf7f;
+    }
+
+    [data-theme="dark"] .professional-alert.info {
+        background: linear-gradient(135deg, #1c2e4a 0%, #2a3d5c 100%);
+        color: #6bb5ff;
+    }
+
+    [data-theme="dark"] .field-hint {
+        background-color: #3c2f03;
+        border-color: #856404;
+        color: #ffd54f;
+    }
+
+    [data-theme="dark"] .field-error {
+        background-color: #3c1c1c !important;
+    }
+
+    [data-theme="dark"] .field-warning {
+        background-color: #3c2f03 !important;
+    }
+
+    [data-theme="dark"] .field-success {
+        background-color: #1c3c1c !important;
+    }
+
+    [data-theme="dark"] .checkbox.field-error {
+        background-color: #3c1c1c;
+    }
+
+    [data-theme="dark"] .checkbox.field-warning {
+        background-color: #3c2f03;
+    }
+
+</style>
+</head>
+<body>
+    <div class="landing-container">
+        <!-- Enhanced Animated Background -->
+        <div class="animated-bg">
+            <div class="floating-shape shape-1"></div>
+            <div class="floating-shape shape-2"></div>
+            <div class="floating-shape shape-3"></div>
+            <div class="floating-shape shape-4"></div>
+            <div class="floating-shape shape-5"></div>
+            <div class="floating-shape shape-6"></div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="navbar">
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <div class="nav-brand">
+                <div class="logo"><i class="fas fa-shield-alt"></i></div>
+                <span class="brand-text">AIPIF</span>
+            </div>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/login" class="nav-link">Login</a>
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                    <span>Dark Mode</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Mobile Overlay -->
+        <div class="mobile-overlay" id="mobileOverlay"></div>
+
+        <!-- Mobile Navigation -->
+        <div class="mobile-nav-links" id="mobileNavLinks">
+            <a href="/" class="nav-link">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a href="/login" class="nav-link">
+                <i class="fas fa-sign-in-alt"></i>
+                <span>Login</span>
+            </a>
+            <button class="theme-toggle" id="mobileThemeToggle">
+                <i class="fas fa-moon"></i>
+                <span>Dark Mode</span>
+            </button>
+        </div>
+
+        <!-- Signup Form with Enhanced Glass Morphism -->
+        <section class="hero">
+            <div class="auth-container">
+                <div class="glass-card">
+                    <div class="auth-header">
+                        <div class="auth-badge">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                        <h2 class="glass-title">Create Account</h2>
+                        <p>Join AIPIF to secure your AI applications</p>
+                    </div>
+
+                    <form id="signupForm" class="auth-form">
+                        <input type="hidden" id="csrf_token" name="csrf_token">
+                        <div class="form-group">
+                            <label for="username" class="form-label">Username</label>
+                            <div class="input-group">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="username" name="username" required placeholder="Choose a username" class="glass-input">
+                            </div>
+                            <small class="input-help">3-20 characters, letters, numbers and underscores only</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email Address</label>
+                            <div class="input-group">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="email" name="email" required placeholder="Enter your email" class="glass-input">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password" class="form-label">Password</label>
+                            <div class="input-group">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="password" name="password" required placeholder="Create a password" class="glass-input">
+                                <button type="button" class="password-toggle" id="passwordToggle">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <small class="input-help">At least 6 characters</small>
+                            <div class="password-strength">
+                                <div class="strength-bar"></div>
+                            </div>
+                            <div class="strength-text">Password strength</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirmPassword" class="form-label">Confirm Password</label>
+                            <div class="input-group">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Confirm your password" class="glass-input">
+                                <button type="button" class="password-toggle" id="confirmPasswordToggle">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-options">
+                            <label class="checkbox">
+                                <input type="checkbox" id="agreeTerms" required>
+                                <span class="checkmark"></span>
+                                <span>I agree to the <a href="#" class="link">Terms of Service</a> and <a href="#" class="link">Privacy Policy</a></span>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="glass-button" id="signupButton">
+                            <i class="fas fa-user-plus"></i>
+                            Create Account
+                        </button>
+
+                        <div class="glass-divider">
+                            <span>Already have an account?</span>
+                        </div>
+
+                        <a href="/login" class="glass-button-secondary">
+                            <i class="fas fa-sign-in-alt"></i>
+                            Sign In
+                        </a>
+                    </form>
+
+                    <div id="authMessage" class="auth-message"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('🚀 Initializing Enhanced Signup Page...');
+
+        // Initialize theme
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        updateThemeToggle(currentTheme);
+
+        // PASSWORD TOGGLE FUNCTIONALITY
+        const passwordToggle = document.getElementById('passwordToggle');
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordToggle = document.getElementById('confirmPasswordToggle');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+
+        if (passwordToggle && passwordInput) {
+            console.log('✅ Setting up password toggle');
+            passwordToggle.addEventListener('click', function() {
+                const icon = this.querySelector('i');
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    icon.className = 'fas fa-eye-slash';
+                    console.log('🔓 Password visible');
+                } else {
+                    passwordInput.type = 'password';
+                    icon.className = 'fas fa-eye';
+                    console.log('🔒 Password hidden');
+                }
+            });
+        }
+
+        if (confirmPasswordToggle && confirmPasswordInput) {
+            console.log('✅ Setting up confirm password toggle');
+            confirmPasswordToggle.addEventListener('click', function() {
+                const icon = this.querySelector('i');
+                if (confirmPasswordInput.type === 'password') {
+                    confirmPasswordInput.type = 'text';
+                    icon.className = 'fas fa-eye-slash';
+                    console.log('🔓 Confirm password visible');
+                } else {
+                    confirmPasswordInput.type = 'password';
+                    icon.className = 'fas fa-eye';
+                    console.log('🔒 Confirm password hidden');
+                }
+            });
+        }
+
+        // MOBILE MENU FUNCTIONALITY
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const mobileOverlay = document.getElementById('mobileOverlay');
+        const mobileNavLinks = document.getElementById('mobileNavLinks');
+        let mobileMenuOpen = false;
+
+        if (mobileMenuToggle && mobileOverlay && mobileNavLinks) {
+            console.log('✅ Setting up mobile menu');
+
+            mobileMenuToggle.addEventListener('click', function() {
+                mobileMenuOpen = !mobileMenuOpen;
+                if (mobileMenuOpen) {
+                    // Open mobile menu
+                    mobileNavLinks.classList.add('mobile-open');
+                    mobileOverlay.style.display = 'block';
+                    this.innerHTML = '<i class="fas fa-times"></i>';
+                    document.body.style.overflow = 'hidden';
+                    setTimeout(() => {
+                        mobileOverlay.style.opacity = '1';
+                    }, 10);
+                    console.log('📱 Mobile menu opened');
+                } else {
+                    // Close mobile menu
+                    mobileNavLinks.classList.remove('mobile-open');
+                    mobileOverlay.style.opacity = '0';
+                    this.innerHTML = '<i class="fas fa-bars"></i>';
+                    document.body.style.overflow = '';
+                    setTimeout(() => {
+                        mobileOverlay.style.display = 'none';
+                    }, 300);
+                    console.log('📱 Mobile menu closed');
+                }
+            });
+
+            mobileOverlay.addEventListener('click', function() {
+                mobileMenuOpen = false;
+                mobileNavLinks.classList.remove('mobile-open');
+                mobileOverlay.style.opacity = '0';
+                mobileMenuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                document.body.style.overflow = '';
+                setTimeout(() => {
+                    mobileOverlay.style.display = 'none';
+                }, 300);
+                console.log('📱 Mobile menu closed via overlay');
+            });
+
+            // Close menu when clicking on links
+            mobileNavLinks.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenuOpen = false;
+                    mobileNavLinks.classList.remove('mobile-open');
+                    mobileOverlay.style.opacity = '0';
+                    mobileMenuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                    document.body.style.overflow = '';
+                    setTimeout(() => {
+                        mobileOverlay.style.display = 'none';
+                    }, 300);
+                    console.log('📱 Mobile menu closed via nav link');
+                });
+            });
+        }
+
+        // THEME TOGGLE FUNCTIONALITY
+        const themeToggle = document.getElementById('themeToggle');
+        const mobileThemeToggle = document.getElementById('mobileThemeToggle');
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeToggle(newTheme);
+            console.log('🎨 Theme changed to:', newTheme);
+        }
+
+        function updateThemeToggle(theme) {
+            const themeToggles = document.querySelectorAll('.theme-toggle');
+            themeToggles.forEach(toggle => {
+                const icon = toggle.querySelector('i');
+                const text = toggle.querySelector('span');
+                if (icon) {
+                    icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+                }
+                if (text) {
+                    text.textContent = theme === 'dark' ? 'Light Mode' : 'Dark Mode';
+                }
+            });
+        }
+
+        if (themeToggle) {
+            themeToggle.addEventListener('click', toggleTheme);
+        }
+        if (mobileThemeToggle) {
+            mobileThemeToggle.addEventListener('click', toggleTheme);
+        }
+
+        // PASSWORD STRENGTH INDICATOR
+        function initPasswordStrength() {
+            const passwordInput = document.getElementById('password');
+            if (!passwordInput) return;
+
+            console.log('✅ Setting up password strength indicator');
+
+            passwordInput.addEventListener('input', function(e) {
+                updatePasswordStrength(e.target.value);
+            });
+        }
+
+        function updatePasswordStrength(password) {
+            const strengthBar = document.querySelector('.strength-bar');
+            const strengthText = document.querySelector('.strength-text');
+
+            if (!strengthBar || !strengthText) return;
+
+            if (!password) {
+                strengthBar.style.width = '0%';
+                strengthText.textContent = '';
+                return;
+            }
+
+            let strength = 0;
+            let feedback = '';
+
+            // Strength calculation
+            if (password.length >= 6) strength += 25;
+            if (password.length >= 8) strength += 25;
+            if (/[A-Z]/.test(password)) strength += 25;
+            if (/[0-9]/.test(password)) strength += 15;
+            if (/[^A-Za-z0-9]/.test(password)) strength += 10;
+
+            // Update visual indicator
+            strengthBar.className = 'strength-bar';
+
+            if (strength < 50) {
+                strengthBar.classList.add('strength-weak');
+                feedback = 'Weak password';
+            } else if (strength < 75) {
+                strengthBar.classList.add('strength-medium');
+                feedback = 'Fair password';
+            } else if (strength < 90) {
+                strengthBar.classList.add('strength-good');
+                feedback = 'Good password';
+            } else {
+                strengthBar.classList.add('strength-strong');
+                feedback = 'Strong password';
+            }
+
+            strengthBar.style.width = `${Math.min(strength, 100)}%`;
+            strengthText.textContent = feedback;
+        }
+
+        // ENHANCED FORM VALIDATION SYSTEM
+        const signupForm = document.getElementById('signupForm');
+        const signupButton = document.getElementById('signupButton');
+        const authMessage = document.getElementById('authMessage');
+        const agreeTerms = document.getElementById('agreeTerms');
+
+        // Professional Alert System
+        function showProfessionalAlert(message, type = 'error', field = null) {
+            // Remove any existing alerts
+            removeExistingAlerts();
+
+            // Create alert element
+            const alert = document.createElement('div');
+            alert.className = `professional-alert ${type}`;
+            alert.innerHTML = `
+                <div class="alert-content">
+                    <i class="fas ${getAlertIcon(type)}"></i>
+                    <span class="alert-message">${message}</span>
+                    <button class="alert-close" onclick="this.parentElement.parentElement.remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+
+            // Insert alert at the top of the form
+            const form = document.getElementById('signupForm');
+            if (form) {
+                form.insertBefore(alert, form.firstChild);
+            }
+
+            // Highlight problematic field if specified
+            if (field) {
+                highlightField(field, type);
+            }
+
+            // Auto-remove after 5 seconds for non-error messages
+            if (type !== 'error') {
+                setTimeout(() => {
+                    if (alert.parentElement) {
+                        alert.remove();
+                    }
+                }, 5000);
+            }
+
+            // Add subtle shake animation to form for errors (less aggressive)
+            if (type === 'error' && form) {
+                shakeElement(form);
+            }
+
+            console.log(`🔔 ${type.toUpperCase()} Alert: ${message}`);
+        }
+
+        function getAlertIcon(type) {
+            const icons = {
+                error: 'fa-exclamation-circle',
+                warning: 'fa-exclamation-triangle',
+                success: 'fa-check-circle',
+                info: 'fa-info-circle'
+            };
+            return icons[type] || 'fa-info-circle';
+        }
+
+        function removeExistingAlerts() {
+            const existingAlerts = document.querySelectorAll('.professional-alert');
+            existingAlerts.forEach(alert => alert.remove());
+        }
+
+        function highlightField(fieldId, type) {
+            const field = document.getElementById(fieldId);
+            if (!field) return;
+
+            // Remove existing highlights
+            field.classList.remove('field-error', 'field-warning', 'field-success');
+
+            // Add appropriate highlight
+            if (type === 'error') {
+                field.classList.add('field-error');
+            } else if (type === 'warning') {
+                field.classList.add('field-warning');
+            } else if (type === 'success') {
+                field.classList.add('field-success');
+            }
+
+            // Scroll to field if it's an error
+            if (type === 'error') {
+                field.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                field.focus();
+            }
+        }
+
+        function highlightTermsCheckbox(type) {
+            const checkboxContainer = agreeTerms ? agreeTerms.closest('.checkbox') : null;
+            if (!checkboxContainer) return;
+
+            // Remove existing highlights
+            checkboxContainer.classList.remove('field-error', 'field-warning', 'field-success');
+
+            // Add appropriate highlight
+            if (type === 'error') {
+                checkboxContainer.classList.add('field-error');
+
+                // Add subtle pulse animation for emphasis
+                checkboxContainer.style.animation = 'terms-pulse 0.5s ease-in-out 2';
+                setTimeout(() => {
+                    checkboxContainer.style.animation = '';
+                }, 1000);
+            } else if (type === 'warning') {
+                checkboxContainer.classList.add('field-warning');
+            }
+        }
+
+        function shakeElement(element) {
+            element.style.animation = 'professional-shake 0.4s ease-in-out';
+            setTimeout(() => {
+                element.style.animation = '';
+            }, 400);
+        }
+
+        // Comprehensive Form Validation
+        function validateForm() {
+            const username = document.getElementById('username').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const termsAgreed = agreeTerms ? agreeTerms.checked : false;
+
+            let isValid = true;
+            let errorMessage = '';
+            let errorField = '';
+
+            // Check for empty fields
+            if (!username) {
+                errorMessage = 'Please enter your username';
+                errorField = 'username';
+                isValid = false;
+            } else if (!email) {
+                errorMessage = 'Please enter your email address';
+                errorField = 'email';
+                isValid = false;
+            } else if (!password) {
+                errorMessage = 'Please create a password';
+                errorField = 'password';
+                isValid = false;
+            } else if (!confirmPassword) {
+                errorMessage = 'Please confirm your password';
+                errorField = 'confirmPassword';
+                isValid = false;
+            } else if (!termsAgreed) {
+                errorMessage = 'You must agree to the Terms of Service and Privacy Policy to create an account';
+                errorField = 'agreeTerms';
+                isValid = false;
+            }
+
+            // If basic validation failed, show alert and return
+            if (!isValid) {
+                showProfessionalAlert(errorMessage, 'error', errorField);
+
+                // Special handling for terms checkbox
+                if (errorField === 'agreeTerms') {
+                    highlightTermsCheckbox('error');
+                    // Scroll to terms section
+                    const termsSection = document.querySelector('.form-options');
+                    if (termsSection) {
+                        termsSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }
+
+                return false;
+            }
+
+            // Validate username format
+            const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
+            if (!usernameRegex.test(username)) {
+                showProfessionalAlert(
+                    'Username must be 3-20 characters long and contain only letters, numbers, and underscores',
+                    'error',
+                    'username'
+                );
+                return false;
+            }
+
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showProfessionalAlert(
+                    'Please enter a valid email address',
+                    'error',
+                    'email'
+                );
+                return false;
+            }
+
+            // Validate password strength
+            if (password.length < 6) {
+                showProfessionalAlert(
+                    'Password must be at least 6 characters long',
+                    'error',
+                    'password'
+                );
+                return false;
+            }
+
+            // Check password match
+            if (password !== confirmPassword) {
+                showProfessionalAlert(
+                    'Passwords do not match. Please check and try again.',
+                    'error',
+                    'confirmPassword'
+                );
+                return false;
+            }
+
+            // Check password strength (warning only, doesn't block submission)
+            const strength = calculatePasswordStrength(password);
+            if (strength < 50) {
+                showProfessionalAlert(
+                    'Your password is weak. Consider adding uppercase letters, numbers, or special characters for better security.',
+                    'warning',
+                    'password'
+                );
+                // Don't return false here - just warn the user but allow continuation
+            }
+
+            return true;
+        }
+
+        function calculatePasswordStrength(password) {
+            let strength = 0;
+            if (password.length >= 6) strength += 25;
+            if (password.length >= 8) strength += 25;
+            if (/[A-Z]/.test(password)) strength += 25;
+            if (/[0-9]/.test(password)) strength += 15;
+            if (/[^A-Za-z0-9]/.test(password)) strength += 10;
+            return Math.min(strength, 100);
+        }
+
+        // Real-time field validation with professional feedback
+        function setupRealTimeValidation() {
+            const fields = {
+                username: { element: document.getElementById('username'), validator: validateUsername },
+                email: { element: document.getElementById('email'), validator: validateEmail },
+                password: { element: document.getElementById('password'), validator: validatePassword },
+                confirmPassword: { element: document.getElementById('confirmPassword'), validator: validateConfirmPassword }
+            };
+
+            Object.entries(fields).forEach(([fieldId, { element, validator }]) => {
+                if (element) {
+                    element.addEventListener('blur', function() {
+                        const isValid = validator(this.value);
+                        if (!isValid && this.value.trim() !== '') {
+                            showFieldHint(fieldId, getFieldHint(fieldId, this.value));
+                        } else {
+                            removeFieldHint(fieldId);
+                        }
+                    });
+
+                    element.addEventListener('input', function() {
+                        removeFieldHint(fieldId);
+                        // Clear error highlighting when user starts typing
+                        this.classList.remove('field-error', 'field-warning');
+                    });
+                }
+            });
+
+            // Terms checkbox validation - FIXED: Now properly validates terms
+            if (agreeTerms) {
+                agreeTerms.addEventListener('change', function() {
+                    removeFieldHint('agreeTerms');
+                    const checkboxContainer = this.closest('.checkbox');
+                    if (!this.checked) {
+                        checkboxContainer.classList.add('field-warning');
+                    } else {
+                        checkboxContainer.classList.remove('field-error', 'field-warning', 'field-success');
+                    }
+                });
+            }
+        }
+
+        function validateUsername(username) {
+            const regex = /^[a-zA-Z0-9_]{3,20}$/;
+            return regex.test(username);
+        }
+
+        function validateEmail(email) {
+            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return regex.test(email);
+        }
+
+        function validatePassword(password) {
+            return password.length >= 6;
+        }
+
+        function validateConfirmPassword(confirmPassword) {
+            const password = document.getElementById('password').value;
+            return confirmPassword === password;
+        }
+
+        function getFieldHint(fieldId, value) {
+            const hints = {
+                username: 'Username must be 3-20 characters (letters, numbers, underscores only)',
+                email: 'Please enter a valid email address',
+                password: 'Password must be at least 6 characters long',
+                confirmPassword: 'Passwords must match',
+                agreeTerms: 'You must agree to the Terms of Service and Privacy Policy'
+            };
+            return hints[fieldId];
+        }
+
+        function showFieldHint(fieldId, message) {
+            removeFieldHint(fieldId);
+
+            const field = document.getElementById(fieldId);
+            if (!field) return;
+
+            const hint = document.createElement('div');
+            hint.className = 'field-hint';
+            hint.innerHTML = `<i class="fas fa-info-circle"></i> ${message}`;
+
+            field.parentNode.appendChild(hint);
+            field.classList.add('field-warning');
+        }
+
+        function removeFieldHint(fieldId) {
+            const field = document.getElementById(fieldId);
+            if (!field) return;
+
+            const existingHint = field.parentNode.querySelector('.field-hint');
+            if (existingHint) {
+                existingHint.remove();
+            }
+        }
+
+        // FORM SUBMISSION HANDLER
+        if (signupForm) {
+            console.log('✅ Setting up enhanced signup form');
+
+            // Setup real-time validation
+            setupRealTimeValidation();
+
+            signupForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                console.log('👤 Signup form submitted');
+
+                // Remove any existing alerts
+                removeExistingAlerts();
+
+                // Validate form
+                if (!validateForm()) {
+                    return; // Stop if validation fails
+                }
+
+                // Show loading state
+                setButtonLoading(signupButton, true);
+
+                // Get form data
+                const formData = new FormData(this);
+                const username = formData.get('username');
+                const email = formData.get('email');
+                const password = formData.get('password');
+
+                try {
+                    console.log('📡 Sending signup request...');
+
+                    // API call without CSRF token (correct for signup)
+                    const response = await fetch('/api/auth/signup', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            username,
+                            email,
+                            password
+                        })
+                    });
+
+                    if (response.ok) {
+                        const result = await response.json();
+                        showProfessionalAlert(
+                            'Account created successfully! Redirecting to your dashboard...',
+                            'success'
+                        );
+
+                        // Store auth data
+                        localStorage.setItem('authToken', result.access_token);
+                        localStorage.setItem('userData', JSON.stringify(result.user));
+
+                        // Redirect after success
+                        setTimeout(() => {
+                            window.location.href = '/dashboard';
+                        }, 2000);
+                    } else {
+                        const errorData = await response.json();
+                        showProfessionalAlert(
+                            errorData.detail || 'Registration failed. Please try again.',
+                            'error'
+                        );
+                    }
+
+                } catch (error) {
+                    console.error('Signup error:', error);
+                    showProfessionalAlert(
+                        'Network error. Please check your connection and try again.',
+                        'error'
+                    );
+                } finally {
+                    setButtonLoading(signupButton, false);
+                }
+            });
+        }
+
+        function setButtonLoading(button, isLoading) {
+            if (!button) return;
+
+            if (isLoading) {
+                button.disabled = true;
+                button.classList.add('loading');
+                button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Account...';
+            } else {
+                button.disabled = false;
+                button.classList.remove('loading');
+                button.innerHTML = '<i class="fas fa-user-plus"></i> Create Account';
+            }
+        }
+
+        // Check if user is already authenticated
+        function checkAuthentication() {
+            const token = localStorage.getItem('authToken');
+            if (token) {
+                console.log('✅ User is already authenticated');
+                showProfessionalAlert(
+                    'You are already logged in. Redirecting to dashboard...',
+                    'info'
+                );
+                setTimeout(() => {
+                    window.location.href = '/dashboard';
+                }, 1500);
+            }
+        }
+
+        // Initialize password strength and authentication check
+        initPasswordStrength();
+        checkAuthentication();
+
+        console.log('✅ Enhanced signup page initialization complete!');
+    });
+</script>
+
+
+</body>
+</html>

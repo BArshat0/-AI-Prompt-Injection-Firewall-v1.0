@@ -1,0 +1,21 @@
+# backend/requirements.txt - UPDATED FOR PYTHON 3.13 COMPATIBILITY
+fastapi
+uvicorn
+pydantic
+pydantic-core
+python-multipart
+jinja2
+python-json-logger
+pyjwt
+email-validator
+pandas
+numpy
+joblib
+scikit-learn
+sqlalchemy
+alembic
+psycopg2-binary  # For PostgreSQL
+# or for async: asyncpg>=0.28.0
+python-multipart
+bcrypt
+# gpt4all==2.1.0  # Comment out or remove this line for now
